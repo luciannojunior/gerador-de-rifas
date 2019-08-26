@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Gerador de Tickets e Documentos DPF</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Angular Material style sheet -->
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+        <!-- Angular Material requires Angular.js Libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+        <!-- Angular Material Library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
+        <script type="text/javascript" src="constants.js"></script>
+        <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript" src="TicketsService.js"></script>
+        <script type="text/javascript" src="TicketsController.js"></script>
+    </head>
+    
+    <body ng-app="dpf" ng-cloak layout="column" ng-controller="TicketsController as vm">
+
+    <md-toolbar>
+        Gerador de Tickets e Documentos para o Cápitulo Deus, Pátria e Família
+    </md-toolbar>
+    <div flex layout="row">
+        <div layout="column" flex>
+        <md-content layout-gt-sm="column" layout-padding>
+            <div>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Template</label>
+                    <md-select ng-model="vm.servico.templateSelecionado">
+                    <md-option ng-repeat="(codigo, nome) in vm.templatesDisponiveis" value="{{codigo}}">
+                        {{nome}}
+                    </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row" layout="column">
+                <md-input-container flex-gt-sm="20" flex="100">
+                    <label>Numeração Inicial</label>
+                    <input ng-model="vm.servico.numeroInicial">
+                </md-input-container>                    
+                <md-input-container flex-gt-sm="40" flex="100">
+                    <label>Páginas (cada página contem 14 documentos)</label>
+                    <input ng-model="vm.servico.paginas">
+                </md-input-container>
+                <md-input-container flex-gt-sm="20" flex="100">
+                    <label>Preço (formato 3,00)</label>
+                    <input ng-model="vm.servico.preco">
+                </md-input-container>
+                <md-input-container flex-gt-sm="20" flex="100">
+                    <label>Data do {{ vm.getParametroData(vm.servico.templateSelecionado) }}</label>
+                    <input ng-model="vm.servico.data">
+                </md-input-container>
+            </div>
+            <div layout-gt-sm="row" layout="column" ng-show="vm.isEvento(vm.servico.templateSelecionado)">
+                <md-input-container flex-gt-sm="20" flex="100">
+                    <label>Hora do {{ vm.getParametroData(vm.servico.templateSelecionado) }} (formato: 19:00)</label>
+                    <input ng-model="vm.servico.hora">
+                </md-input-container>
+            </div>
+            <div layout="row" layout-align="end center">
+              <md-button class="md-raised md-primary" data-ng-click="vm.gerarTickets(vm.servico)">Gerar Tickets</md-button>
+            </div>
+        </md-content>
+
+        </div>
+
+    </div>
+
+    </body>
+</html>
