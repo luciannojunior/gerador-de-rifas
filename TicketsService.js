@@ -120,7 +120,11 @@ app.service('TicketsService', [
         aplicaPrecoRifa(doc, preco, yAtual)
       }
     }
-
+    function populaPaginaComAssunto(doc, assunto){
+      for (var i = 0; i <= 6; i++){
+        // Fill subject
+      }
+    }
     function aplicaNumeracao(doc, numero, yAtual) {
       doc.setFontSize(12)
       doc.setFontType('bold')
@@ -157,6 +161,24 @@ app.service('TicketsService', [
 
     var self = this
 
+    self.gerarRifasGenerica = function(dados, fundo) {
+      var documentoRifas = new jsPDF()
+      for (var pag = 1; pag <= dados.paginas; pag++) {
+        populaPaginaComImagens72(documentoRifas, fundo)
+        populaPaginaComDataENumeracaoEPrecoRifa(
+          documentoRifas,
+          (pag - 1) * 14 + dados.numeroInicial,
+          dados.data,
+          dados.preco
+        )
+        populaPaginaComAssunto(documentoRifas, dados.assunto)
+        if (pag !== dados.paginas) {
+          documentoRifas.addPage()
+        }
+      }
+      // TODO: Colocar para exibir na página
+      documentoRifas.save('Docs.pdf')
+    }
     self.gerarRifasDefault = function(dados, fundo) {
       var documentoRifas = new jsPDF()
       for (var pag = 1; pag <= dados.paginas; pag++) {

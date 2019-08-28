@@ -17,6 +17,7 @@ app.controller('TicketsController', [
       RIFA_GOT: 'Rifa Box Game of Thrones',
       RIFA_SENSOR: 'Rifa Sensor de Ré',
       RIFA_MOEDA: 'Rifa Moeda Centenário',
+      RIFA_GENERICA: 'Rifa Genérica',
     }
 
     this.servico.templateSelecionado = 'RIFA_AC'
@@ -51,6 +52,9 @@ app.controller('TicketsController', [
           break
         case 'RIFA_MOEDA':
           TicketsService.gerarRifasMoeda(dados)
+          break
+        case 'RIFA_GENERICA':
+          TicketsService.gerarRifasGenerica(dados)
           break
         default:
           break
