@@ -1,0 +1,8 @@
+{
+  "name": "gerador-de-rifas",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:luciannojunior/gerador-de-rifas.git",
+  "author": "Luciano Júnior <luciannojunior@gmail.com>",
+  "license": "MIT"
+}
